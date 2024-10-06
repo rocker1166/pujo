@@ -6,7 +6,8 @@ import React from 'react'
 const landingPage = () => {
   return (
     <div>
-      <button>hello</button>
+      <h1>hello welcome to first page </h1>
+      <button>firstpage</button>
       <Button
         variant="secondary"
       >hello</Button>
