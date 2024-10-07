@@ -1,18 +1,11 @@
+
 "use client"
 
 import { useRef, useEffect, useState } from "react"
 import { motion, useMotionValue } from "framer-motion"
 import { Star, Calendar, MapPin } from "lucide-react"
 import Link from "next/link"
-
-const pujoEvents = [
-  { id: 1, title: "Mahalaya Magic", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-1.jpg", rating: 4.8, location: "Kolkata", date: "Oct 14, 2024" },
-  { id: 2, title: "Bodhan Bliss", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-2.jpg", rating: 4.6, location: "Howrah", date: "Oct 15, 2024" },
-  { id: 3, title: "Sasthi Spectacle", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-3.jpg", rating: 4.9, location: "Salt Lake", date: "Oct 16, 2024" },
-  { id: 4, title: "Saptami Soiree", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-4.jpg", rating: 5.0, location: "Park Street", date: "Oct 17, 2024" },
-  { id: 5, title: "Ashtami Extravaganza", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-5.jpg", rating: 4.7, location: "Ballygunge", date: "Oct 18, 2024" },
-  { id: 6, title: "Navami Nights", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-6.jpg", rating: 4.9, location: "New Town", date: "Oct 19, 2024" },
-]
+import { usePujoEvents, type PujoEvent } from '../hooks/usePujoEvents' // Adjust the import path as needed
 
 const AnimatedStar = ({ filled }: { filled: boolean }) => (
   <Star
@@ -22,27 +15,31 @@ const AnimatedStar = ({ filled }: { filled: boolean }) => (
   />
 )
 
-export default function Component() {
-  const [duplicatedEvents, setDuplicatedEvents] = useState(pujoEvents)
+export default function PujopandelCarousel() {
+  const { events: pujoEvents, loading, error } = usePujoEvents()
+  const [duplicatedEvents, setDuplicatedEvents] = useState<PujoEvent[]>([])
   const carouselRef = useRef<HTMLDivElement>(null)
   const [autoScroll, setAutoScroll] = useState(true)
 
   useEffect(() => {
-    setDuplicatedEvents([...pujoEvents, ...pujoEvents, ...pujoEvents])
-  }, [])
+    if (pujoEvents.length > 0) {
+      // Duplicate events to make the carousel seamless
+      setDuplicatedEvents([...pujoEvents, ...pujoEvents, ...pujoEvents])
+    }
+  }, [pujoEvents])
 
   const x = useMotionValue(0)
   const baseVelocity = -0.5
-  
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    useEffect(() => {
+  useEffect(() => {
     let timeoutId: NodeJS.Timeout
 
     const resetPosition = () => {
       const currentX = x.get()
       const containerWidth = carouselRef.current?.scrollWidth || 0
       const viewportWidth = carouselRef.current?.offsetWidth || 0
-      
+
       if (Math.abs(currentX) >= containerWidth - viewportWidth) {
         x.set(0)
       }
@@ -53,7 +50,7 @@ export default function Component() {
         x.set(x.get() + baseVelocity)
         resetPosition()
       }
-      timeoutId = setTimeout(autoScrollAnimation, 16)
+      timeoutId = setTimeout(autoScrollAnimation, 16) // roughly 60fps
     }
 
     autoScrollAnimation()
@@ -62,6 +59,14 @@ export default function Component() {
       clearTimeout(timeoutId)
     }
   }, [x, autoScroll, baseVelocity])
+
+  if (loading) {
+    return <p className="text-white">Loading events...</p>
+  }
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>
+  }
 
   return (
     <section className="py-24 overflow-hidden w-full ">

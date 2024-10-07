@@ -1,58 +1,61 @@
-"use client"
+// components/Pujopandel.tsx
 
-import { useState } from "react"
-import { MapPin, Star, Users, Calendar, Clock, Info } from "lucide-react"
-import { motion } from "framer-motion"
-import Link from "next/link" // Import Link from next/link
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Slider } from "@/components/ui/slider"
-import { Badge } from "@/components/ui/badge"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+"use client";
 
-const pujoEvents = [
-  { id: 1, title: "Mahalaya Magic", image: "https://res.cloudinary.com/saas-cloud/image/upload/v1724137551/next-cloudinary-uploads/mipnfffbfdczufq8ejlp.jpg", rating: 4.8, location: "Kolkata", date: "Oct 14, 2024", time: "6:00 AM - 9:00", description: "Experience the enchanting Mahalaya celebrations with soul-stirring Chandipath and mesmerizing cultural performances.", crowdLevel: "High" },
-  { id: 2, title: "Bodhan Bliss", image: "https://res.cloudinary.com/saas-cloud/image/upload/v1723529241/samples/animals/reindeer.jpg", rating: 4.6, location: "Howrah", date: "Oct 15, 2024", time: "4:00 PM - 8:00", description: "Witness the divine invocation of Goddess Durga with traditional rituals and bhog offerings.", crowdLevel: "Medium" },
-  { id: 3, title: "Sasthi Spectacle", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-3.jpg", rating: 4.9, location: "Salt Lake", date: "Oct 16, 2024", time: "5:00 PM - 10:00", description: "Join the grand unveiling of Durga idol and immerse yourself in festive fervor Sasthi.", crowdLevel: "Very High" },
-  { id: 4, title: "Saptami Soiree", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-4.jpg", rating: 5.0, location: "Park Street", date: "Oct 17, 2024", time: "11:00 AM - 10:00 PM", description: "Indulge in a day-long celebration with elaborate pujas, cultural programs, and mouthwatering Bengali cuisine.", crowdLevel: "Extreme" },
-  { id: 5, title: "Ashtami Extravaganza", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-5.jpg", rating: 4.7, location: "Ballygunge", date: "Oct 18, 2024", time: "6:00 AM - 11:00 PM", description: "Experience the pinnacle of Durga Puja with Pushpanjali, Kumari Puja, and a grand cultural evening.", crowdLevel: "Extreme" },
-  { id: 6, title: "Navami Nights", image: "https://kcqcqxrwjjjgvwuqcxio.supabase.co/storage/v1/object/public/public-images/durga-puja-6.jpg", rating: 4.9, location: "New Town", date: "Oct 19, 2024", time: "4:00 PM - 12:00 AM", description: "Revel in the night-long festivities with Maha Arati, cultural performances, and a dazzling display of lights.", crowdLevel: "High" },
-]
+import { useState } from "react";
+import { MapPin, Star, Users, Calendar, Clock, Info } from "lucide-react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { usePujoEvents, type PujoEvent } from "../hooks/usePujoEvents";
 
-const crowdLevelColors = {
+const crowdLevelColors: Record<PujoEvent["crowdLevel"], string> = {
   "Low": "bg-green-100 text-green-800",
   "Medium": "bg-yellow-100 text-yellow-800",
   "High": "bg-orange-100 text-orange-800",
-  "Very High": "bg-red-100 text-red-800",
+  "VeryHigh": "bg-red-100 text-red-800",
   "Extreme": "bg-purple-100 text-purple-800",
-}
+};
 
 export function Pujopandel() {
-  const [activeFilter, setActiveFilter] = useState<"all" | "nearMe" | "highlyRated" | "highlyCrowded">("all")
-  const [ratingFilter, setRatingFilter] = useState(4.5)
+  const { events: pujoEvents, loading, error } = usePujoEvents();
+  const [activeFilter, setActiveFilter] = useState<"all" | "nearMe" | "highlyRated" | "highlyCrowded">("all");
+  const [ratingFilter, setRatingFilter] = useState(1);
 
   const filteredEvents = pujoEvents.filter(event => {
     // Apply rating filter
-    const meetsRating = event.rating >= ratingFilter
+    const meetsRating = event.rating >= ratingFilter;
 
     // Apply active filter
     switch(activeFilter) {
       case "nearMe":
         // Implement your logic for 'nearMe' filter
         // For demonstration, assume 'nearMe' means location is "Kolkata" or "Howrah"
-        return meetsRating && (event.location === "Kolkata" || event.location === "Howrah")
+        return meetsRating && (event.location === "Kolkata" || event.location === "Howrah");
       case "highlyRated":
-        return meetsRating && event.rating >= 4.8
+        return meetsRating && event.rating >= 4.8;
       case "highlyCrowded":
-        return meetsRating && (event.crowdLevel === "High" || event.crowdLevel === "Very High" || event.crowdLevel === "Extreme")
-
+        return meetsRating && (event.crowdLevel === "High" || event.crowdLevel === "VeryHigh" || event.crowdLevel === "Extreme");
+      
       default:
-        return meetsRating
+        return meetsRating;
     }
-  })
+  });
+
+  if (loading) {
+    return <div className="text-white">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">Error: {error}</div>;
+  }
 
   return (
-    <div className="flex flex-col items-center space-y-6 p-4 min-h-screen ">
+    <div className="flex flex-col items-center space-y-6 p-4 my-10 min-h-screen ">
       <motion.h1 
         className="text-4xl font-bold text-white"
         initial={{ opacity: 0, y: -50 }}
@@ -63,16 +66,21 @@ export function Pujopandel() {
       </motion.h1>
       
       <motion.div 
-        className="w-full max-w-7xl backdrop-blur-lg p-6 rounded-lg shadow-lg border-blue-50"
+        className="w-full max-w-7xl backdrop-blur-lg p-6 rounded-lg shadow-lg "
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <h2 className="text-2xl font-semibold text-white mb-4">Filter Events</h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-semibold text-white">Filter Events</h2>
+          <Link href="/add-pujo-event">
+            <Button variant="default">Add New Event</Button>
+          </Link>
+        </div>
         
         <div className="mb-6">
           {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-<label className="text-lg font-medium text-white">Minimum Rating: {ratingFilter.toFixed(1)}</label>
+          <label className="text-lg font-medium text-white">Minimum Rating: {ratingFilter.toFixed(1)}</label>
           <Slider
             value={[ratingFilter]}
             onValueChange={(value) => setRatingFilter(value[0])}
@@ -130,8 +138,8 @@ export function Pujopandel() {
               <div className="relative">
                 <img src={event.image} alt={event.title} className="w-full h-48 object-cover" />
                 <div className="absolute top-2 right-2">
-                  <Badge variant="secondary" className={`${crowdLevelColors[event.crowdLevel as keyof typeof crowdLevelColors]} px-2 py-1`}>
-                    {event.crowdLevel} Crowd
+                  <Badge variant="secondary" className={`${crowdLevelColors[event.crowdLevel]} px-2 py-1`}>
+                    {event.crowdLevel.replace(/([A-Z])/g, ' $1').trim()} Crowd
                   </Badge>
                 </div>
               </div>
@@ -142,7 +150,9 @@ export function Pujopandel() {
                 <div className="space-y-2">
                   <div className="flex items-center text-orange-600">
                     <Calendar className="h-4 w-4 mr-2" />
-                    <span className="text-sm">{event.date}</span>
+                    <span className="text-sm">
+                      {new Date(event.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
                   </div>
                   <div className="flex items-center text-orange-600">
                     <Clock className="h-4 w-4 mr-2" />
@@ -159,7 +169,7 @@ export function Pujopandel() {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Link href={`explore/pandal/${event.id}`} passHref>
+                        <Link href={`/pandal/${event.id}`} passHref>
                           <Button variant="outline" size="sm" className="mt-2 w-full flex items-center justify-center">
                             <Info className="h-4 w-4 mr-2" />
                             Visit
@@ -178,5 +188,5 @@ export function Pujopandel() {
         ))}
       </div>
     </div>
-  )
+  );
 }
