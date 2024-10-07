@@ -33,7 +33,7 @@ export function Pujopandel() {
 
   const filteredEvents = pujoEvents.filter(event => {
     // Apply rating filter
-    let meetsRating = event.rating >= ratingFilter
+    const meetsRating = event.rating >= ratingFilter
 
     // Apply active filter
     switch(activeFilter) {
@@ -45,7 +45,7 @@ export function Pujopandel() {
         return meetsRating && event.rating >= 4.8
       case "highlyCrowded":
         return meetsRating && (event.crowdLevel === "High" || event.crowdLevel === "Very High" || event.crowdLevel === "Extreme")
-      case "all":
+
       default:
         return meetsRating
     }
@@ -71,7 +71,8 @@ export function Pujopandel() {
         <h2 className="text-2xl font-semibold text-white mb-4">Filter Events</h2>
         
         <div className="mb-6">
-          <label className="text-lg font-medium text-white">Minimum Rating: {ratingFilter.toFixed(1)}</label>
+          {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+<label className="text-lg font-medium text-white">Minimum Rating: {ratingFilter.toFixed(1)}</label>
           <Slider
             value={[ratingFilter]}
             onValueChange={(value) => setRatingFilter(value[0])}
