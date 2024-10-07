@@ -89,7 +89,7 @@ export default function Component() {
                   whileHover={{ scale: 1.05, zIndex: 1 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  <Link href={`/pandal/${event.id}`} className="block h-full">
+                  <Link href={`/explore/pandal/${event.id}`} className="block h-full">
                     <div className="bg-white rounded-xl shadow-2xl overflow-hidden h-full flex flex-col transform transition-all duration-300 hover:shadow-orange-300/50 cursor-pointer">
                       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
                         <motion.img

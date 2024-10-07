@@ -72,10 +72,10 @@ export default function Hero() {
           Immerse yourself in the vibrant pandals and rich traditions of Bengal's biggest festival
         </p>
         <div className='flex gap-3'>
-        <Link href="#" className="bg-red-600 text-white text-lg px-8 py-3 rounded-2xl hover:bg-red-700 transition transform hover:scale-105">
+        <Link href="/explore" className="bg-red-600 text-white text-lg px-8 py-3 rounded-2xl hover:bg-red-700 transition transform hover:scale-105">
           Explore Pandals 🌍
         </Link>
-        <Link href="#" className="bg-orange-600 text-white text-lg px-8 py-3 rounded-2xl hover:bg-red-700 transition transform hover:scale-105">
+        <Link href="/upload" className="bg-orange-600 text-white text-lg px-8 py-3 rounded-2xl hover:bg-red-700 transition transform hover:scale-105">
           Mark Pandals 📍
         </Link>
         </div>

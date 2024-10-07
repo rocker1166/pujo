@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { MapPin, Star, Users, Calendar, Clock, Info } from "lucide-react"
 import { motion } from "framer-motion"
+import Link from "next/link" // Import Link from next/link
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
@@ -26,14 +27,32 @@ const crowdLevelColors = {
   "Extreme": "bg-purple-100 text-purple-800",
 }
 
-export function EnhancedDurgaPujaFilterComponent() {
+export function Pujopandel() {
   const [activeFilter, setActiveFilter] = useState<"all" | "nearMe" | "highlyRated" | "highlyCrowded">("all")
   const [ratingFilter, setRatingFilter] = useState(4.5)
 
-  const filteredEvents = pujoEvents.filter(event => event.rating >= ratingFilter)
+  const filteredEvents = pujoEvents.filter(event => {
+    // Apply rating filter
+    let meetsRating = event.rating >= ratingFilter
+
+    // Apply active filter
+    switch(activeFilter) {
+      case "nearMe":
+        // Implement your logic for 'nearMe' filter
+        // For demonstration, assume 'nearMe' means location is "Kolkata" or "Howrah"
+        return meetsRating && (event.location === "Kolkata" || event.location === "Howrah")
+      case "highlyRated":
+        return meetsRating && event.rating >= 4.8
+      case "highlyCrowded":
+        return meetsRating && (event.crowdLevel === "High" || event.crowdLevel === "Very High" || event.crowdLevel === "Extreme")
+      case "all":
+      default:
+        return meetsRating
+    }
+  })
 
   return (
-    <div className="flex flex-col items-center space-y-6 p-4 min-h-screen">
+    <div className="flex flex-col items-center space-y-6 p-4 min-h-screen ">
       <motion.h1 
         className="text-4xl font-bold text-white"
         initial={{ opacity: 0, y: -50 }}
@@ -44,7 +63,7 @@ export function EnhancedDurgaPujaFilterComponent() {
       </motion.h1>
       
       <motion.div 
-        className="w-full max-w-7xl backdrop-blur-lg p-6 rounded-lg shadow-lg"
+        className="w-full max-w-7xl backdrop-blur-lg p-6 rounded-lg shadow-lg border-blue-50"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -98,7 +117,7 @@ export function EnhancedDurgaPujaFilterComponent() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl">
         {filteredEvents.map((event, index) => (
           <motion.div
             key={event.id}
@@ -110,7 +129,7 @@ export function EnhancedDurgaPujaFilterComponent() {
               <div className="relative">
                 <img src={event.image} alt={event.title} className="w-full h-48 object-cover" />
                 <div className="absolute top-2 right-2">
-                  <Badge variant="secondary" className={`${crowdLevelColors[event.crowdLevel]} px-2 py-1`}>
+                  <Badge variant="secondary" className={`${crowdLevelColors[event.crowdLevel as keyof typeof crowdLevelColors]} px-2 py-1`}>
                     {event.crowdLevel} Crowd
                   </Badge>
                 </div>
@@ -128,7 +147,7 @@ export function EnhancedDurgaPujaFilterComponent() {
                     <Clock className="h-4 w-4 mr-2" />
                     <span className="text-sm">{event.time}</span>
                   </div>
-                  <div className="flex items-center text-gray-600">
+                  <div className="flex items-center text-gray-300">
                     <MapPin className="h-4 w-4 mr-2" />
                     <span className="text-sm">{event.location}</span>
                   </div>
@@ -139,10 +158,12 @@ export function EnhancedDurgaPujaFilterComponent() {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button variant="outline" size="sm" className="mt-2 w-full">
-                          <Info className="h-4 w-4 mr-2" />
-                          Visit
-                        </Button>
+                        <Link href={`explore/pandal/${event.id}`} passHref>
+                          <Button variant="outline" size="sm" className="mt-2 w-full flex items-center justify-center">
+                            <Info className="h-4 w-4 mr-2" />
+                            Visit
+                          </Button>
+                        </Link>
                       </TooltipTrigger>
                       <TooltipContent>
                         <p className="max-w-xs text-sm">{event.description}</p>
