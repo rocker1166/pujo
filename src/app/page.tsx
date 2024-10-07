@@ -1,18 +1,13 @@
-'use client'
+import Hero from '@/components/Hero'
 
-import { Button } from '@/components/ui/button'
 import React from 'react'
 
-const landingPage = () => {
+function landing() {
   return (
     <div>
-      <h1>hello welcome to first page </h1>
-      <button>firstpage</button>
-      <Button
-        variant="secondary"
-      >hello</Button>
+      <Hero />
     </div>
   )
 }
 
-export default landingPage
+export default landing
