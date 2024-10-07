@@ -1,9 +1,14 @@
-import React from 'react'
+'use client'
 
-const explorePage = () => {
-  return (
-    <div>explorePage</div>
+import { EnhancedDurgaPujaFilterComponent } from "@/components/enhanced-durga-puja-filter"
+
+
+
+
+
+const explore = () => {
+  return (<EnhancedDurgaPujaFilterComponent />
   )
 }
 
-export default explorePage
+export default explore
