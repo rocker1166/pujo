@@ -4,8 +4,6 @@ import React from "react"
 import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import DhakImage from "/public/dhak.png"
-import DurgaImage from "/public/durga1.png"
-import MandalaImage from "/public/p.png"
 import KashfulImage from "/public/kashful.png"
 import DiasImage from "/public/dhak.png"
 import BackgroundImage from "/public/bg.jpg"
@@ -45,40 +43,7 @@ export default function DurgaPujaBackground() {
       />
 
       {/* Durga Image - Appearing and fitting screen width with glow effect */}
-      <motion.div
-        className="absolute inset-x-0 bottom-0 flex justify-center items-end overflow-hidden"
-        initial={{ y: "100%" }}
-        animate={{ y: 0 }}
-        transition={{
-          duration: 2,
-          ease: "easeOut",
-        }}
-        style={{ y }}
-      >
-        <div className="relative">
-          <motion.div
-            className="absolute inset-0 bg-yellow-300 rounded-full filter blur-3xl opacity-30"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.2, 0.3, 0.2],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse",
-            }}
-          />
-          <Image
-            src={DurgaImage}
-            alt="Goddess Durga"
-            width={600}
-            height={800}
-            objectFit="contain"
-            priority
-            className="drop-shadow-2xl"
-          />
-        </div>
-      </motion.div>
+  
 
       {/* Floating Kashful with enhanced animation */}
       <motion.div
