@@ -10,7 +10,7 @@ const Navbar1 = () => {
   };
 
   return (
-    <nav className="backdrop-blur-sm shadow-md fixed top-0 w-full z-50">
+    <nav className="backdrop-blur-md shadow-md fixed top-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -59,10 +59,10 @@ const Navbar1 = () => {
             </button>
           </div>
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <a href="#about" className="text-black font-extrabold hover:text-gray-900">About</a>
-            <a href="#explore" className="text-black font-extrabold   hover:text-gray-900">Explore</a>
+            <a href="#about" className="text-gray-500 hover:text-gray-900">About</a>
+            <a href="#explore" className="text-gray-500 hover:text-gray-900">Explore</a>
             {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Pandel</button>
+<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Panel</button>
           </div>
         </div>
       </div>

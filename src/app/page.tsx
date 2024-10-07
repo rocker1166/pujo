@@ -1,11 +1,14 @@
 import Hero from '@/components/Hero'
-
+import Zoompic from '@/components/zoompic'
+import Pandel from '../components/Showcase';
 import React from 'react'
 
 function landing() {
   return (
-    <div>
+    <div >
       <Hero />
+      <Zoompic />
+      <Pandel />
     </div>
   )
 }
