@@ -21,12 +21,13 @@ export async function POST(request: Request) {
   try {
     const data = await request.json();
 
-    const { title, image, rating, location, date, time, description, crowdLevel, latitude, longitude } = data;
+    const { title, images, rating, location, date, time, description, crowdLevel, latitude, longitude } = data;
 
     // Validate required fields
     if (
       !title ||
-      !image ||
+      !images ||
+      images.length === 0 ||
       rating === undefined ||
       !location ||
       !date ||
@@ -67,7 +68,7 @@ export async function POST(request: Request) {
     const newEvent = await prisma.pujoEvent.create({
       data: {
         title,
-        image,
+        images,
         rating: parsedRating,
         location,
         date: parsedDate,

@@ -98,7 +98,7 @@ export default function PujopandelCarousel() {
                     <div className="bg-white rounded-xl shadow-2xl overflow-hidden h-full flex flex-col transform transition-all duration-300 hover:shadow-orange-300/50 cursor-pointer">
                       <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
                         <motion.img
-                          src={event.image}
+                          src={event.images[0]}
                           alt={event.title}
                           className="w-full h-full object-cover"
                           whileHover={{ scale: 1.1 }}

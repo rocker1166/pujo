@@ -1,19 +1,17 @@
-// hooks/usePujoEvents.ts
-
 import { useState, useEffect } from 'react';
 
 export interface PujoEvent {
   id: number;
   title: string;
-  image: string;
+  images: string[];
   rating: number;
   location: string;
   date: string; // ISO string
   time: string;
   description: string;
   crowdLevel: 'Low' | 'Medium' | 'High' | 'VeryHigh' | 'Extreme';
-  latitude: number,
-  longitude: number,
+  latitude: number;
+  longitude: number;
 }
 
 const CACHE_KEY = 'pujoEvents';
@@ -53,10 +51,9 @@ export function usePujoEvents() {
         setEvents(data);
         localStorage.setItem(CACHE_KEY, JSON.stringify(data));
         localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error(err);
-        setError(err.message || 'An error occurred.');
+        setError(err instanceof Error ? err.message : 'An unknown error occurred.');
       } finally {
         setLoading(false);
       }

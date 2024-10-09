@@ -9,10 +9,11 @@ datasource db {
   url      = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
- model PujoEvent {
+
+model PujoEvent {
   id          Int      @id @default(autoincrement())
   title       String
-  image       String
+  images      String[]
   rating      Float
   location    String
   date        DateTime
@@ -21,7 +22,6 @@ datasource db {
   crowdLevel  CrowdLevel
   latitude    Float
   longitude   Float
-  // Add other fields as necessary
 }
 
 enum CrowdLevel {
