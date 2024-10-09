@@ -1,31 +1,16 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// prisma/schema.prisma
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 generator client {
   provider = "prisma-client-js"
 }
  
 datasource db {
   provider = "postgresql"
-  // Uses connection pooling
-  url = env("POSTGRES_PRISMA_URL")
-  // Uses direct connection, ⚠️ make sure to keep this to `POSTGRES_URL_NON_POOLING`
-  // or you'll have dangling databases from migrations
+  url      = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
-
-enum CrowdLevel {
-  Low
-  Medium
-  High
-  VeryHigh
-  Extreme
-}
-
-model PujoEvent {
-  id          Int         @id @default(autoincrement())
+ model PujoEvent {
+  id          Int      @id @default(autoincrement())
   title       String
   image       String
   rating      Float
@@ -34,4 +19,15 @@ model PujoEvent {
   time        String
   description String
   crowdLevel  CrowdLevel
+  latitude    Float
+  longitude   Float
+  // Add other fields as necessary
+}
+
+enum CrowdLevel {
+  Low
+  Medium
+  High
+  VeryHigh
+  Extreme
 }

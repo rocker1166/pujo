@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Label } from '@/components/ui/label';
 import { Calendar, Clock, MapPin, Star, Users, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
+import AddressAutocompleteMap from '../../../components/Upmap';
 
 const crowdLevels = ['Low', 'Medium', 'High', 'VeryHigh', 'Extreme'];
 
@@ -25,6 +26,8 @@ export default function AddPujoEvent() {
   const [time, setTime] = useState('');
   const [description, setDescription] = useState('');
   const [crowdLevel, setCrowdLevel] = useState('Medium');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -34,7 +37,7 @@ export default function AddPujoEvent() {
     setError(null);
 
     // Basic client-side validation
-    if (!title || !image || !rating || !location || !date || !time || !description || !crowdLevel) {
+    if (!title || !image || !rating || !location || !date || !time || !description || !crowdLevel || !latitude || !longitude) {
       setError('All fields are required.');
       setIsSubmitting(false);
       return;
@@ -77,6 +80,8 @@ export default function AddPujoEvent() {
           time,
           description,
           crowdLevel,
+          latitude: parseFloat(latitude),
+          longitude: parseFloat(longitude),
         }),
       });
 
@@ -100,8 +105,13 @@ export default function AddPujoEvent() {
     }
   };
 
+  const handleMapCoordinatesChange = (lat: string, lng: string) => {
+    setLatitude(lat);
+    setLongitude(lng);
+  };
+
   return (
-    <div className="flex flex-col items-center p-6 min-h-screen ">
+    <div className="flex flex-col items-center p-6 min-h-screen bg-gray-900">
       <motion.h1
         className="text-4xl font-bold text-white mb-6"
         initial={{ opacity: 0, y: -50 }}
@@ -227,6 +237,11 @@ export default function AddPujoEvent() {
               ))}
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="mb-6">
+          <Label className="text-white mb-2 block">Event Location on Map</Label>
+          <AddressAutocompleteMap onCoordinatesChange={handleMapCoordinatesChange} />
         </div>
 
         <Button type="submit" disabled={isSubmitting} className="w-full">

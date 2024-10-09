@@ -12,6 +12,8 @@ export interface PujoEvent {
   time: string;
   description: string;
   crowdLevel: 'Low' | 'Medium' | 'High' | 'VeryHigh' | 'Extreme';
+  latitude: number,
+  longitude: number,
 }
 
 const CACHE_KEY = 'pujoEvents';
