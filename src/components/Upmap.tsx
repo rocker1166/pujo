@@ -43,7 +43,7 @@ export default function AddressAutocompleteMap({ onCoordinatesChange }: AddressA
     const myMap = olaMaps.init({
       style: "https://api.olamaps.io/tiles/vector/v1/styles/default-light-standard-mr/style.json",
       container: mapContainer,
-      center: [77.61648476788898, 12.931423492103944],
+      center: [88.346142, 22.529923],
       zoom: 15,
     })
 
@@ -254,4 +254,4 @@ export default function AddressAutocompleteMap({ onCoordinatesChange }: AddressA
       </div>
     </div>
   )
-}
+} 

@@ -1,127 +1,111 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import { useParams } from 'next/navigation'
-import { motion } from 'framer-motion'
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselNext, 
-  CarouselPrevious 
-} from "@/components/ui/carousel"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { 
-  Star, 
-  MapPin, 
-  Calendar, 
-  Clock, 
-  Users, 
-  Send 
-} from 'lucide-react'
+"use client"
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Star, MapPin, Calendar, Clock, Users } from 'lucide-react';
+import Navmap from '@/components/Navmap';
 
 interface PandalData {
-  id: number
-  title: string
-  images: string[]
-  rating: number
-  location: string
-  date: string
-  time: string
-  description: string
-  crowdLevel: string
-  latitude: number
-  longitude: number
+  id: number;
+  title: string;
+  images: string[];
+  rating: number;
+  location: string;
+  date: string;
+  time: string;
+  description: string;
+  crowdLevel: string;
+  latitude: number;
+  longitude: number;
 }
 
 interface Comment {
-  id: number
-  text: string
-  author: string
+  id: number;
+  text: string;
+  createdAt: string;
 }
 
 export default function PandalShowcase() {
-  const { id } = useParams()
-  const [pandalData, setPandalData] = useState<PandalData | null>(null)
-  const [comments, setComments] = useState<Comment[]>([])
-  const [newComment, setNewComment] = useState('')
-  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null)
+  const { id } = useParams();
+  const [pandalData, setPandalData] = useState<PandalData | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Check local storage for existing data
-        const storedData = localStorage.getItem(`pandal_${id}`);
-        if (storedData) {
-          setPandalData(JSON.parse(storedData));
-          return; // Return early if data exists in local storage
-        }
-
-        // Fetch data from API if not found in local storage
-        const response = await fetch(`/api/pandal/${id}`)
-        if (!response.ok) {
-          throw new Error('Failed to fetch pandal data')
-        }
-        const data = await response.json()
-
-        // Store data in local storage
-        localStorage.setItem(`pandal_${id}`, JSON.stringify(data));
+        // Fetch Pandal data from API
+        const response = await fetch(`/api/pandal/${id}`);
+        if (!response.ok) throw new Error('Failed to fetch pandal data');
+        
+        const data = await response.json();
         setPandalData(data);
+        
+        // Fetch comments for the specific Pandal
+        const commentsResponse = await fetch(`/api/pandal/${id}/comments`);
+        if (!commentsResponse.ok) throw new Error('Failed to fetch comments');
+
+        const commentsData = await commentsResponse.json();
+        setComments(commentsData);
       } catch (error) {
-        console.error(error)
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [id]);
+
+  const handleCommentSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newComment.trim()) {
+      try {
+        // Post new comment to API
+        const response = await fetch(`/api/pandal/${id}/comments`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ text: newComment }),
+        });
+
+        if (!response.ok) throw new Error('Failed to post comment');
+
+        const newCommentData = await response.json();
+        setComments([...comments, newCommentData]);
+        setNewComment('');
+      } catch (error) {
+        console.error(error);
       }
     }
-    fetchData()
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords
-          setUserLocation({ latitude, longitude })
-          console.log('User location:', { latitude, longitude })
-        },
-        (error) => {
-          console.error('Error getting location:', error)
-        }
-      )
-    } else {
-      console.log('Geolocation is not supported by this browser.')
-    }
-  }, [id])
-
-  const handleCommentSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (newComment.trim()) {
-      setComments([...comments, { id: Date.now(), text: newComment, author: 'Anonymous' }])
-      setNewComment('')
-    }
-  }
+  };
 
   if (!pandalData) {
     return (
-      <div className="flex items-center justify-center min-h-screen p-10">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-xl text-gray-500">Loading...</div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-fit w-full py-20 px-2 sm:px-4 md:px-6  overflow-hidden">
-      <div className="max-w-full mx-auto border border-black backdrop-blur-lg shadow-2xl rounded-3xl overflow-hidden">
-        <div className="flex flex-col lg:flex-row w-full h-full">
+    <div className="min-h-screen w-full py-8 px-4 md:px-8 lg:px-12 xl:px-20 my-10 p-44 overflow-hidden">
+      <div className="max-w-7xl mx-auto bg-[url('https://wallpaperaccess.com/full/2410949.jpg')] bg-opacity-25 shadow-2xl rounded-lg overflow-hidden">
+        <div className="flex flex-col lg:flex-row">
           {/* Left Section */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             className="lg:w-2/3 w-full p-6"
           >
-            <h1 className="text-4xl font-extrabold text-white mb-4">{pandalData.title}</h1>
-            <Carousel className="w-full mb-6 rounded-lg overflow-hidden shadow">
+            <h1 className="text-4xl font-extrabold text-gray-900 mb-6">{pandalData.title}</h1>
+
+            <Carousel className="w-full mb-6 rounded-lg overflow-hidden">
               <CarouselContent>
-                {pandalData.images.map((image, index) => (
+                {pandalData.images?.map((image, index) => (
                   <CarouselItem key={index}>
                     <div className="relative h-64 sm:h-80 lg:h-96">
                       <Image
@@ -135,83 +119,71 @@ export default function PandalShowcase() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2  bg-opacity-75 rounded-full p-2 shadow hover:bg-opacity-100 transition" />
-              <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2  bg-opacity-75 rounded-full p-2 shadow hover:bg-opacity-100 transition" />
+              <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-opacity-75 rounded-full p-2 shadow" />
+              <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-opacity-75 rounded-full p-2 shadow" />
             </Carousel>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-              <div className="flex items-center text-yellow-500">
+
+            {/* Event Details Section */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 bg-blue-950 bg-opacity-35 gap-6 mb-6 p-6 rounded-lg shadow-lg">
+              <div className="flex items-center text-yellow-300">
                 <Star className="w-5 h-5 mr-2" />
                 <span className="font-semibold text-lg">{pandalData.rating} / 5</span>
               </div>
-              <div className="flex items-center text-green-600">
-                <MapPin className="w-5 h-5 mr-2" />
+              <div className="flex items-center text-green-300">
+                <MapPin className="w-5 h-5 mr-2" />  
                 <span className="text-lg">{pandalData.location}</span>
               </div>
-              <div className="flex items-center text-purple-600">
+              <div className="flex items-center text-purple-300">
                 <Calendar className="w-5 h-5 mr-2" />
                 <span className="text-lg">{new Date(pandalData.date).toLocaleDateString()}</span>
               </div>
-              <div className="flex items-center text-blue-600">
+              <div className="flex items-center text-blue-300">
                 <Clock className="w-5 h-5 mr-2" />
                 <span className="text-lg">{pandalData.time}</span>
               </div>
-              <div className="flex items-center text-red-600">
+              <div className="flex items-center text-red-300">
                 <Users className="w-5 h-5 mr-2" />
                 <span className="text-lg">Crowd Level: {pandalData.crowdLevel}</span>
               </div>
+              <h1 className="col-span-2 text-xl font-bold text-white mt-4">Puja Description</h1>
+              <p className="col-span-2 text-gray-200 mb-6">{pandalData.description}</p>
             </div>
-            <p className="text-gray-700 mb-6">{pandalData.description}</p>
-            {userLocation && (
-              <div className="p-4 bg-blue-100 rounded-lg mb-6 shadow">
-                <h3 className="text-lg font-semibold text-blue-800 mb-2">Your Current Location</h3>
-                <p className="text-blue-600">Latitude: {userLocation.latitude.toFixed(6)}</p>
-                <p className="text-blue-600">Longitude: {userLocation.longitude.toFixed(6)}</p>
-              </div>
-            )}
           </motion.div>
 
           {/* Right Section */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="lg:w-1/3 w-full backdrop-blur-xl border border-blue-600 p-6 flex flex-col"
+            className="lg:w-1/3 w-full bg-blue-950 bg-opacity-30 p-6 rounded-lg shadow-lg"
           >
-            {/* Comments Section */}
-            <div className="mb-6 flex-grow">
-              <h2 className="text-2xl font-semibold text-white mb-4">Comments</h2>
-              <form onSubmit={handleCommentSubmit} className="mb-4">
-                <Input
-                  type="text"
-                  placeholder="Add a comment..."
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  className="mb-2"
-                />
-                <Button type="submit" className="w-full bg-orange-600 text-white hover:bg-orange-700 transition">
-                  Post Comment
-                </Button>
-              </form>
-              <div className="space-y-4 max-h-64 overflow-y-auto">
-                {comments.length === 0 ? (
-                  <p className="text-gray-500">No comments yet. Be the first to comment!</p>
-                ) : (
-                  comments.map((comment) => (
-                    <div key={comment.id} className="bg-white p-4 rounded-lg shadow">
-                      <p className="text-gray-800">{comment.text}</p>
-                      <p className="text-sm text-gray-500 mt-1">- {comment.author}</p>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-            {/* Map Placeholder */}
-            <div className="h-64 bg-green-500 rounded-lg flex items-center justify-center text-white text-2xl font-bold shadow">
-              Map Component Placeholder
+            <h2 className="text-2xl font-bold mb-4">Comments</h2>
+            <form onSubmit={handleCommentSubmit} className="flex mb-4">
+              <Input
+                type="text"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Add a comment"
+                className="flex-1 mr-2"
+              />
+              <Button type="submit">Post</Button>
+            </form>
+            <div className="max-h-80 overflow-y-auto">
+              {comments.length === 0 ? (
+                <div className="text-gray-500">No comments yet. Be the first to comment!</div>
+              ) : (
+                comments.map((comment) => (
+                  <div key={comment.id} className="border-b border-gray-300 py-2">
+                    <p className="text-gray-800">{comment.text}</p>
+                    <span className="text-sm text-gray-500">{new Date(comment.createdAt).toLocaleString()}</span>
+                  </div>
+                ))
+              )}
             </div>
           </motion.div>
         </div>
+        <Navmap latitude={pandalData.latitude} longitude={pandalData.longitude} />
       </div>
     </div>
-  )
+  );
 }
