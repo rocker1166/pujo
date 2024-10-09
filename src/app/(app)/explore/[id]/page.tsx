@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Calendar, Clock, Users } from 'lucide-react';
 import Navmap from '@/components/Navmap';
+import Link from 'next/link';
 
 interface PandalData {
   id: number;
@@ -174,8 +175,8 @@ export default function PandalShowcase() {
               ) : (
                 comments.map((comment) => (
                   <div key={comment.id} className="border-b border-gray-300 py-2">
-                    <p className="text-gray-800">{comment.text}</p>
-                    <span className="text-sm text-gray-500">{new Date(comment.createdAt).toLocaleString()}</span>
+                    <p className="text-black text-xl">{comment.text}</p>
+                    <span className="text-sm text-white">{new Date(comment.createdAt).toLocaleString()}</span>
                   </div>
                 ))
               )}
@@ -183,6 +184,11 @@ export default function PandalShowcase() {
           </motion.div>
         </div>
         <Navmap latitude={pandalData.latitude} longitude={pandalData.longitude} />
+        <center>
+        <Link href={`https://www.google.com/search?q= direction from my location to ${pandalData.latitude}, ${pandalData.longitude}`} className="inline-block  items-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300" target="_blank" rel="noopener noreferrer">
+       Get Direction 🌍 
+    </Link>
+    </center>
       </div>
     </div>
   );
