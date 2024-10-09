@@ -23,7 +23,7 @@ export default function AddPujoEvent() {
   const [rating, setRating] = useState(4.5)
   const [location, setLocation] = useState('')
   const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
+  const [time, setTime] = useState('6:00 AM - 9:00 PM')
   const [description, setDescription] = useState('')
   const [crowdLevel, setCrowdLevel] = useState('Medium')
   const [latitude, setLatitude] = useState('')
@@ -138,19 +138,18 @@ export default function AddPujoEvent() {
   }
 
   return (
-    <div className="flex flex-col items-center p-6 min-h-screen my-10">
+    <div className="flex flex-col items-center p-6 min-h-screen my-10 ">
       <motion.h1
         className="text-4xl font-bold text-white mb-6"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Add New Pujo Event
-      </motion.h1>
+        Locate new pujo Pandal      </motion.h1>
 
       <motion.form
         onSubmit={handleSubmit}
-        className="w-full max-w-2xl bg-gray-800 p-8 rounded-lg shadow-lg"
+        className="w-full max-w-2xl border border-black   backdrop-blur-xl p-8 rounded-lg shadow-lg"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -160,7 +159,7 @@ export default function AddPujoEvent() {
         <div className="mb-4">
           <Label htmlFor="title" className="text-white flex items-center">
             <Info className="w-4 h-4 mr-2" />
-            Title
+            Pandal Name
           </Label>
           <Input
             id="title"
@@ -168,7 +167,7 @@ export default function AddPujoEvent() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            placeholder="Event Title"
+            placeholder="ex- sontosh mitra square"
             className="mt-1"
           />
         </div>
@@ -240,7 +239,7 @@ export default function AddPujoEvent() {
         <div className="mb-4">
           <Label htmlFor="date" className="text-white flex items-center">
             <Calendar className="w-4 h-4 mr-2" />
-            Date
+            Visit Date
           </Label>
           <Input
             id="date"
@@ -255,7 +254,7 @@ export default function AddPujoEvent() {
         <div className="mb-4">
           <Label htmlFor="time" className="text-white flex items-center">
             <Clock className="w-4 h-4 mr-2" />
-            Time
+            Open and Closing time
           </Label>
           <Input
             id="time"
@@ -271,14 +270,14 @@ export default function AddPujoEvent() {
         <div className="mb-4">
           <Label htmlFor="description" className="text-white flex items-center">
             <Info className="w-4 h-4 mr-2" />
-            Description
+           Pandal Review
           </Label>
           <Textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            placeholder="Event Description"
+            placeholder="Pandal review"
             className="mt-1"
             rows={4}
           />

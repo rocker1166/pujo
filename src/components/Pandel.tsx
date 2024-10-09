@@ -215,7 +215,7 @@ export function Pujopandel() {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Link href={`/pandal/${event.id}`} passHref>
+                        <Link href={`/explore/${event.id}`} passHref>
                           <Button variant="outline" size="sm" className="mt-2 w-full flex items-center justify-center">
                             <Info className="h-4 w-4 mr-2" />
                             Visit
