@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Calendar, Clock, MapPin, Star, Users, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 import AddressAutocompleteMap from '../../../components/Upmap';
+import { div } from 'framer-motion/client';
 
 const crowdLevels = ['Low', 'Medium', 'High', 'VeryHigh', 'Extreme'];
 
