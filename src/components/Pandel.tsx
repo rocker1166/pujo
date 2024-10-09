@@ -90,8 +90,8 @@ export function Pujopandel() {
       >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-white">Filter Events</h2>
-          <Link href="/add-pujo-event">
-            <Button variant="default">Add New Event</Button>
+          <Link href="/upload">
+            <Button variant="default">Add New Pandal</Button>
           </Link>
         </div>
         

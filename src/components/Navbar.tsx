@@ -63,7 +63,7 @@ const Navbar1 = () => {
             <a href="/about" className="text-white hover:text-gray-900">About</a>
             <a href="/explore" className="text-white hover:text-gray-900">Explore</a>
             {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Panel</button>
+<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"><Link href='/upload'>Add Panel</Link></button>
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ const Navbar1 = () => {
           <a href="/about" className="text-white hover:text-gray-900">About</a>
           <a href="/explore" className="text-white hover:text-gray-900">Explore</a>
           {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Panel</button>
+<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"><Link href='/upload'>Add Panel</Link></button>
         </div>
       </div>
     </nav>

@@ -72,7 +72,7 @@ export default function PujopandelCarousel() {
     <section className="py-24 overflow-hidden w-full ">
       <div className="w-full px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-12 tracking-tight">
-          Durga Pujo Extravaganza
+          Our Best Pandal
         </h2>
         <div className="relative">
           <motion.div
