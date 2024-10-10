@@ -1,0 +1,43 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+ 
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model PujoEvent {
+  id          Int      @id @default(autoincrement())
+  title       String
+  images      String[]
+  rating      Float
+  location    String
+  date        DateTime
+  time        String
+  description String
+  crowdLevel  CrowdLevel
+  latitude    Float
+  longitude   Float
+
+  Comment Comment[]
+}
+
+enum CrowdLevel {
+  Low
+  Medium
+  High
+  VeryHigh
+  Extreme
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  text        String
+  createdAt   DateTime @default(now())
+  pujoEvent   PujoEvent @relation(fields: [pujoEventId], references: [id])
+  pujoEventId Int
+}

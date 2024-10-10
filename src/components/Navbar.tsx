@@ -1,5 +1,6 @@
 "use client";
 import { button } from 'framer-motion/client';
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 const Navbar1 = () => {
@@ -14,7 +15,7 @@ const Navbar1 = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold">Brand</h1>
+            <h1 className="text-2xl font-bold"><Link href='/'>PujoPixel</Link></h1>
           </div>
           <div className="flex items-center md:hidden">
             {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
@@ -59,20 +60,20 @@ const Navbar1 = () => {
             </button>
           </div>
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <a href="#about" className="text-gray-500 hover:text-gray-900">About</a>
-            <a href="#explore" className="text-gray-500 hover:text-gray-900">Explore</a>
+            <a href="/about" className="text-white hover:text-gray-900">About</a>
+            <a href="/explore" className="text-white hover:text-gray-900">Explore</a>
             {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Panel</button>
+<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"><Link href='/upload'>Add Panel</Link></button>
           </div>
         </div>
       </div>
       {/* Mobile Menu */}
-      <div className={`md:hidden ${isOpen ? 'block' : 'hidden'} bg-white`}>
+      <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}  backdrop-blur-xl`}>
         <div className="flex flex-col px-4 py-2 space-y-2">
-          <a href="#about" className="text-gray-500 hover:text-gray-900">About</a>
-          <a href="#explore" className="text-gray-500 hover:text-gray-900">Explore</a>
+          <a href="/about" className="text-white hover:text-gray-900">About</a>
+          <a href="/explore" className="text-white hover:text-gray-900">Explore</a>
           {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Panel</button>
+<button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"><Link href='/upload'>Add Panel</Link></button>
         </div>
       </div>
     </nav>

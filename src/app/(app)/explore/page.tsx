@@ -1,13 +1,13 @@
 'use client'
 
-import { EnhancedDurgaPujaFilterComponent } from "@/components/enhanced-durga-puja-filter"
-
+import {Pujopandel }  from "@/components/Pandel"
 
 
 
 
 const explore = () => {
-  return (<EnhancedDurgaPujaFilterComponent />
+  return (
+  <Pujopandel />
   )
 }
 
