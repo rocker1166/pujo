@@ -9,9 +9,9 @@ import DurgaImage from "/public/durga1.png";
 
 export default function Hero() {
   return (
-    <div className="relative h-screen overflow-hidden backdrop-blur-sm pt-20 z-10">
+    <div className="relative h-screen  overflow-hidden backdrop-blur-sm  pt-20 z-10">
       <motion.div
-        className="absolute inset-x-0 bottom-0 flex justify-center items-end overflow-hidden"
+        className="absolute inset-x-0 top-10 flex justify-center items-end overflow-hidden "
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
         transition={{
