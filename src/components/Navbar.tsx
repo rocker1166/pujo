@@ -36,7 +36,7 @@ const Navbar1 = () => {
             <h1 className="text-2xl font-bold"><Link href='/'></Link></h1>
             <div className="mr-4">
               <Link href="/">
-                <Image src="/PUJA.png" alt="Durga Puja" width={180} height={60} className="rounded-xl" />
+                <Image src="/PUJA2.png" alt="Durga Puja" width={180} height={60} className="rounded-xl" />
               </Link>
             </div>
           </div>

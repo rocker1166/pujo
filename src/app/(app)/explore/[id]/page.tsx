@@ -102,9 +102,9 @@ export default function PandalShowcase() {
             transition={{ duration: 0.6 }}
             className="lg:w-2/3 w-full p-6"
           >
-            <h1 className="text-4xl font-extrabold text-gray-900 mb-6">{pandalData.title}</h1>
+            <h1 className="text-4xl font-extrabold text-white mb-6">{pandalData.title}</h1>
 
-            <Carousel className="w-full mb-6 rounded-lg overflow-hidden">
+            <Carousel className="w-full mb-6 rounded-xl overflow-hidden">
               <CarouselContent>
                 {pandalData.images?.map((image, index) => (
                   <CarouselItem key={index}>
@@ -113,7 +113,7 @@ export default function PandalShowcase() {
                         src={image}
                         alt={`Pandal image ${index + 1}`}
                         fill
-                        className="object-cover"
+                        className="object-cover rounded-xl"
                         priority={index === 0}
                       />
                     </div>
@@ -134,11 +134,11 @@ export default function PandalShowcase() {
                 <MapPin className="w-5 h-5 mr-2" />  
                 <span className="text-lg">{pandalData.location}</span>
               </div>
-              <div className="flex items-center text-purple-300">
+              <div className="flex items-center text-purple-400">
                 <Calendar className="w-5 h-5 mr-2" />
                 <span className="text-lg">{new Date(pandalData.date).toLocaleDateString()}</span>
               </div>
-              <div className="flex items-center text-blue-300">
+              <div className="flex items-center text-blue-400">
                 <Clock className="w-5 h-5 mr-2" />
                 <span className="text-lg">{pandalData.time}</span>
               </div>
@@ -158,16 +158,16 @@ export default function PandalShowcase() {
             transition={{ duration: 0.6 }}
             className="lg:w-1/3 w-full bg-blue-950 bg-opacity-30 p-6 rounded-lg shadow-lg"
           >
-            <h2 className="text-2xl font-bold mb-4">Comments</h2>
+            <h2 className="text-2xl text-white font-bold mb-4">Comments</h2>
             <form onSubmit={handleCommentSubmit} className="flex mb-4">
               <Input
                 type="text"
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 placeholder="Add a comment"
-                className="flex-1 mr-2"
+                className="flex-1 mr-2 rounded-xl"
               />
-              <Button type="submit">Post</Button>
+              <Button className='rounded-xl bg-rose-600 hover:bg-festiveOrange' type="submit">Post</Button>
             </form>
             <div className="max-h-80 overflow-y-auto">
               {comments.length === 0 ? (
@@ -185,7 +185,7 @@ export default function PandalShowcase() {
         </div>
         <Navmap latitude={pandalData.latitude} longitude={pandalData.longitude} />
         <center>
-        <Link href={`https://www.google.com/search?q= direction from my location to ${pandalData.latitude}, ${pandalData.longitude}`} className="inline-block  items-center bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300" target="_blank" rel="noopener noreferrer">
+        <Link href={`https://www.google.com/search?q= direction from my location to ${pandalData.latitude}, ${pandalData.longitude}`} className="inline-block  items-center bg-rose-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-festiveOrange transition duration-300" target="_blank" rel="noopener noreferrer">
        Get Direction 🌍 
     </Link>
     </center>
