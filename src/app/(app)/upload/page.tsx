@@ -140,16 +140,16 @@ export default function AddPujoEvent() {
   return (
     <div className="flex flex-col items-center p-6 min-h-screen my-10 ">
       <motion.h1
-        className="text-4xl font-bold text-white mb-6"
+        className="text-4xl font-bold text-white mb-6 "
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Locate new pujo Pandal      </motion.h1>
+        Locate New Pujo Pandal      </motion.h1>
 
       <motion.form
         onSubmit={handleSubmit}
-        className="w-full max-w-2xl border border-black   backdrop-blur-xl p-8 rounded-lg shadow-lg"
+        className="w-full max-w-2xl    backdrop-blur-xl p-8 rounded-lg shadow-lg"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
@@ -157,7 +157,7 @@ export default function AddPujoEvent() {
         {error && <p className="text-red-500 mb-4 p-2 bg-red-100 rounded">{error}</p>}
 
         <div className="mb-4">
-          <Label htmlFor="title" className="text-white flex items-center">
+          <Label htmlFor="title" className="text-white flex items-center ">
             <Info className="w-4 h-4 mr-2" />
             Pandal Name
           </Label>
@@ -168,7 +168,7 @@ export default function AddPujoEvent() {
             onChange={(e) => setTitle(e.target.value)}
             required
             placeholder="ex- sontosh mitra square"
-            className="mt-1"
+            className="mt-1 rounded-xl"
           />
         </div>
 
@@ -177,7 +177,8 @@ export default function AddPujoEvent() {
             <Upload className="w-4 h-4 mr-2" />
             Image Upload
           </Label>
-          <UploadButton
+          <UploadButton 
+          className='rounded-lg'
             endpoint="imageUploader"
             onClientUploadComplete={handleImageUpload}
             onUploadError={(error: Error) => {
@@ -216,7 +217,7 @@ export default function AddPujoEvent() {
             onChange={(e) => setRating(Number.parseFloat(e.target.value))}
             required
             placeholder="4.5"
-            className="mt-1"
+            className="mt-1 rounded-xl"
           />
         </div>
 
@@ -232,7 +233,7 @@ export default function AddPujoEvent() {
             onChange={(e) => setLocation(e.target.value)}
             required
             placeholder="Event Location"
-            className="mt-1"
+            className="mt-1 rounded-xl"
           />
         </div>
 
@@ -247,7 +248,7 @@ export default function AddPujoEvent() {
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
-            className="mt-1"
+            className="mt-1 rounded-xl"
           />
         </div>
 
@@ -263,7 +264,7 @@ export default function AddPujoEvent() {
             onChange={(e) => setTime(e.target.value)}
             required
             placeholder="e.g., 6:00 AM - 9:00 AM"
-            className="mt-1"
+            className="mt-1 rounded-xl"
           />
         </div>
 
@@ -278,7 +279,7 @@ export default function AddPujoEvent() {
             onChange={(e) => setDescription(e.target.value)}
             required
             placeholder="Pandal review"
-            className="mt-1"
+            className="mt-1 rounded-xl"
             rows={4}
           />
         </div>
@@ -310,7 +311,7 @@ export default function AddPujoEvent() {
           <AddressAutocompleteMap onCoordinatesChange={handleMapCoordinatesChange} />
         </div>
 
-        <Button type="submit" disabled={isSubmitting} className="w-full bg-blue-600 hover:bg-blue-700">
+        <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl bg-rose-600 hover:bg-festiveOrange">
           {isSubmitting ? 'Submitting...' : 'Add Event'}
         </Button>
       </motion.form>
