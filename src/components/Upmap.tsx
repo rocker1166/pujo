@@ -191,7 +191,7 @@ export default function AddressAutocompleteMap({ onCoordinatesChange }: AddressA
           value={query}
           onChange={handleInputChange}
           placeholder="Enter your address"
-          className="w-full p-2 bg-white border border-orange-600 rounded-xl text-white placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+          className="w-full p-2 bg-white border border-orange-600 rounded-xl text-black placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
         />
         <button
           onClick={handleSubmit}
@@ -210,7 +210,7 @@ export default function AddressAutocompleteMap({ onCoordinatesChange }: AddressA
             name="latitude"
             value={latitude}
             onChange={handleCoordinateChange}
-            className="mt-1 block w-full p-2 bg-white border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            className="mt-1 block w-full p-2 bg-white border border-gray-600 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
           />
         </div>
         <div className="flex-1">
@@ -222,7 +222,7 @@ export default function AddressAutocompleteMap({ onCoordinatesChange }: AddressA
             value={longitude}
             
             onChange={handleCoordinateChange}
-            className="mt-1 block w-full p-2 bg-white border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            className="mt-1 block w-full p-2 bg-white border border-gray-600 rounded-xl text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
           />
         </div>
       </div>

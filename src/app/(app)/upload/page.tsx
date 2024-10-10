@@ -80,8 +80,8 @@ export default function AddPujoEvent() {
 
     const selectedDate = new Date(date)
     const today = new Date()
-    if (selectedDate < today) {
-      setError('Date must be in the future.')
+    if (selectedDate > today || selectedDate == today) {
+      setError('Date must be in the Past or Today.')
       setIsSubmitting(false)
       return
     }
@@ -312,7 +312,7 @@ export default function AddPujoEvent() {
         </div>
 
         <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl bg-rose-600 hover:bg-festiveOrange">
-          {isSubmitting ? 'Submitting...' : 'Add Event'}
+          {isSubmitting ? 'Submitting...' : 'Add Pandal'}
         </Button>
       </motion.form>
     </div>
