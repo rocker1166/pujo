@@ -37,7 +37,7 @@ function Landing() {
   return (
     <div className="overflow-hidden">
       <Hero />
-      {isClient && <Zoompic />}
+       <Zoompic />
       <Pandel />
       <motion.div
         ref={ref}
