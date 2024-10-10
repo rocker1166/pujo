@@ -1,47 +1,64 @@
-"use client"; // Add this directive
+"use client";
 
+import { useState, useEffect } from 'react';
 import Hero from '@/components/Hero';
 import Zoompic from '@/components/zoompic';
 import Pandel from '../components/Showcase';
-import React from 'react';
 import Ripple from '../components/ui/ripple';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Footer from '@/components/Footer';
+import { useInView } from 'react-intersection-observer';
 
 function Landing() {
-  // Define the animation properties
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const zoomAnimation = {
-    initial: { scale: 1 },  // Initial scale
+    initial: { scale: 1 },
     animate: {
-      scale: [1, 1.05, 1], // Scale up to 1.05 and back to 1
+      scale: [1, 1.05, 1],
       transition: {
-        duration: 1.5, // Duration of the zoom effect
-        repeat: Infinity, // Repeat the animation
-        ease: "easeInOut", // Easing function
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut",
       },
     },
   };
 
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   return (
-    <div>
+    <div className="overflow-hidden">
       <Hero />
-      <Zoompic />
+      {isClient && <Zoompic />}
       <Pandel />
-      <div className="relative flex h-[700px] w-full flex-col items-center justify-center rounded-lg my-20 md:shadow-xl">
-        <motion.div {...zoomAnimation}> {/* Apply the animation properties */}
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 50 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.5 }}
+        className="relative flex h-[50vh] md:h-[70vh] w-full flex-col items-center justify-center my-10 md:my-20"
+      >
+        <motion.div {...zoomAnimation}>
           <Image
-            src="/durga2.png" // Ensure your image path is correct
+            src="/durga2.png"
             alt="Goddess Durga"
-            width={500} // Specify the width in pixels
-            height={800} // Specify the height in pixels
-            priority // Preload the image for better performance
-            className="drop-shadow-2xl" // Add additional Tailwind CSS classes for styling
-            style={{ objectFit: "contain" }} // Ensures the image maintains its aspect ratio
+            width={500}
+            height={800}
+            priority
+            className="drop-shadow-2xl max-h-full w-auto"
+            style={{ objectFit: "contain" }}
           />
         </motion.div>
         <Ripple mainCircleOpacity={2} />
-      </div>
+      </motion.div>
       <Footer />
     </div>
   );
