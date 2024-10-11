@@ -42,10 +42,10 @@ export default function PandalShowcase() {
         // Fetch Pandal data from API
         const response = await fetch(`/api/pandal/${id}`);
         if (!response.ok) throw new Error('Failed to fetch pandal data');
-        
+
         const data = await response.json();
         setPandalData(data);
-        
+
         // Fetch comments for the specific Pandal
         const commentsResponse = await fetch(`/api/pandal/${id}/comments`);
         if (!commentsResponse.ok) throw new Error('Failed to fetch comments');
@@ -92,8 +92,8 @@ export default function PandalShowcase() {
   }
 
   return (
-    <div className="min-h-screen w-full py-8 px-4 md:px-8 lg:px-12 xl:px-20 my-10 p-44 overflow-hidden">
-      <div className="max-w-7xl mx-auto bg-[url('https://wallpaperaccess.com/full/2410949.jpg')] bg-opacity-25 shadow-2xl rounded-lg overflow-hidden">
+    <div className="min-h-screen w-full py-8 px-4 md:px-8 lg:px-12 xl:px-20 my-10 p-44 overflow-hidden rounded-xl">
+      <div className=" rounded-xl max-w-7xl mx-auto bg-[url('https://wallpaperaccess.com/full/2410949.jpg')] bg-opacity-25 shadow-2xl  overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Left Section */}
           <motion.div
@@ -125,29 +125,29 @@ export default function PandalShowcase() {
             </Carousel>
 
             {/* Event Details Section */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 bg-blue-950 bg-opacity-35 gap-6 mb-6 p-6 rounded-lg shadow-lg">
-              <div className="flex items-center text-yellow-300">
-                <Star className="w-5 h-5 mr-2" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-6 mb-6 p-6 rounded-lg shadow-lg sm:p-8 lg:p-6">
+              <div className="sm:col-span-1 text-yellow-300 flex lg:col-span-3 ">
+                <Star className="w-5 h-5 mr-2 text-yellow-300" />
                 <span className="font-semibold text-lg">{pandalData.rating} / 5</span>
               </div>
-              <div className="flex items-center text-green-300">
-                <MapPin className="w-5 h-5 mr-2" />  
+              <div className="sm:col-span-1 flex text-green-300 lg:col-span-3">
+                <MapPin className="w-5 h-5 mr-2" />
                 <span className="text-lg">{pandalData.location}</span>
               </div>
-              <div className="flex items-center text-purple-400">
+              <div className="sm:col-span-1 text-purple-200 lg:col-span-3">
                 <Calendar className="w-5 h-5 mr-2" />
                 <span className="text-lg">{new Date(pandalData.date).toLocaleDateString()}</span>
               </div>
-              <div className="flex items-center text-blue-400">
+              {/* <div className="sm:col-span-1 lg:col-span-3">
                 <Clock className="w-5 h-5 mr-2" />
                 <span className="text-lg">{pandalData.time}</span>
-              </div>
-              <div className="flex items-center text-red-300">
+              </div> */}
+              <div className="sm:col-span-1 text-pink-600 lg:col-span-3">
                 <Users className="w-5 h-5 mr-2" />
                 <span className="text-lg">Crowd Level: {pandalData.crowdLevel}</span>
               </div>
-              <h1 className="col-span-2 text-xl font-bold text-white mt-4">Puja Description</h1>
-              <p className="col-span-2 text-gray-200 mb-6">{pandalData.description}</p>
+              <h1 className="sm:col-span-3 lg:col-span-1 text-xl font-bold text-white mt-4">Puja Description</h1>
+              <p className="sm:col-span-3 lg:col-span-1 text-gray-200 mb-6">{pandalData.description}</p>
             </div>
           </motion.div>
 
@@ -156,7 +156,7 @@ export default function PandalShowcase() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="lg:w-1/3 w-full bg-blue-950 bg-opacity-30 p-6 rounded-lg shadow-lg"
+            className="lg:w-1/3 w-full bg-blue-950 bg-opacity-30 p-6 rounded-xl shadow-lg"
           >
             <h2 className="text-2xl text-white font-bold mb-4">Comments</h2>
             <form onSubmit={handleCommentSubmit} className="flex mb-4">
@@ -185,10 +185,10 @@ export default function PandalShowcase() {
         </div>
         <Navmap latitude={pandalData.latitude} longitude={pandalData.longitude} />
         <center>
-        <Link href={`https://www.google.com/search?q= direction from my location to ${pandalData.latitude}, ${pandalData.longitude}`} className="inline-block  items-center bg-rose-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-festiveOrange transition duration-300" target="_blank" rel="noopener noreferrer">
-       Get Direction 🌍 
-    </Link>
-    </center>
+          <Link href={`https://www.google.com/search?q= direction from my location to ${pandalData.latitude}, ${pandalData.longitude}`} className="inline-block  items-center bg-rose-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-festiveOrange transition duration-300" target="_blank" rel="noopener noreferrer">
+            Get Direction 🌍
+          </Link>
+        </center>
       </div>
     </div>
   );

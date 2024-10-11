@@ -91,7 +91,7 @@ export function Pujopandel() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-semibold text-white">Filter Events</h2>
           <Link href="/upload">
-            <Button variant="default">Add New Pandal</Button>
+            <Button className=" rounded-xl bg-rose-600 hover:bg-festiveOrange">Add New Pandal</Button>
           </Link>
         </div>
         
@@ -103,38 +103,38 @@ export function Pujopandel() {
             max={5}
             min={0}
             step={0.1}
-            className="mt-2"
+            className="mt-2 "
           />
         </div>
 
         <div className="flex flex-wrap gap-3">
           <Button
-            variant={activeFilter === "all" ? "default" : "outline"}
+            variant={activeFilter === "all" ? "puja" : "pujaone"}
             onClick={() => setActiveFilter("all")}
-            className="flex-grow sm:flex-grow-0"
+            className="flex-grow sm:flex-grow-0 rounded-xl hover:bg-rose-500 "
           >
             All
           </Button>
           <Button
-            variant={activeFilter === "nearMe" ? "default" : "outline"}
+            variant={activeFilter === "nearMe" ? "puja" : "pujaone"}
             onClick={() => setActiveFilter("nearMe")}
-            className="flex-grow sm:flex-grow-0"
+            className="flex-grow sm:flex-grow-0 rounded-xl hover:bg-rose-500"
           >
             <MapPin className="mr-2 h-4 w-4" />
             Near Me
           </Button>
           <Button
-            variant={activeFilter === "highlyRated" ? "default" : "outline"}
+            variant={activeFilter === "highlyRated" ? "puja" : "pujaone"}
             onClick={() => setActiveFilter("highlyRated")}
-            className="flex-grow sm:flex-grow-0"
+            className="flex-grow sm:flex-grow-0 rounded-xl hover:bg-rose-500"
           >
             <Star className="mr-2 h-4 w-4" />
             Highly Rated
           </Button>
           <Button
-            variant={activeFilter === "highlyCrowded" ? "default" : "outline"}
+            variant={activeFilter === "highlyCrowded" ? "puja" : "pujaone"}
             onClick={() => setActiveFilter("highlyCrowded")}
-            className="flex-grow sm:flex-grow-0"
+            className="flex-grow sm:flex-grow-0 rounded-xl hover:bg-rose-500"
           >
             <Users className="mr-2 h-4 w-4" />
             Highly Crowded
@@ -200,10 +200,10 @@ export function Pujopandel() {
                       {new Date(event.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
-                  <div className="flex items-center text-white">
+                  {/* <div className="flex items-center text-white">
                     <Clock className="h-4 w-4 mr-2" />
                     <span className="text-sm">{event.time}</span>
-                  </div>
+                  </div> */}
                   <div className="flex items-center text-gray-300">
                     <MapPin className="h-4 w-4 mr-2" />
                     <span className="text-sm">{event.location}</span>
@@ -216,7 +216,7 @@ export function Pujopandel() {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Link href={`/explore/${event.id}`} passHref>
-                          <Button variant="outline" size="sm" className="mt-2 w-full flex items-center justify-center">
+                          <Button variant="outline" size="sm" className="mt-2 w-full rounded-xl flex items-center justify-center">
                             <Info className="h-4 w-4 mr-2" />
                             Visit
                           </Button>
