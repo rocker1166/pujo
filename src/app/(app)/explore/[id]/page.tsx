@@ -142,11 +142,11 @@ export default function PandalShowcase() {
                 <Clock className="w-5 h-5 mr-2" />
                 <span className="text-lg">{pandalData.time}</span>
               </div> */}
-              <div className="sm:col-span-1 text-pink-600 lg:col-span-3">
+              <div className="sm:col-span-1  text-white lg:col-span-3">
                 <Users className="w-5 h-5 mr-2" />
                 <span className="text-lg">Crowd Level: {pandalData.crowdLevel}</span>
               </div>
-              <h1 className="sm:col-span-3 lg:col-span-1 text-xl font-bold text-white mt-4">Puja Description</h1>
+              <h1 className="sm:col-span-3  text-xl font-bold text-white mt-4">Puja Description</h1>
               <p className="sm:col-span-3 lg:col-span-1 text-gray-200 mb-6">{pandalData.description}</p>
             </div>
           </motion.div>
